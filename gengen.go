@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // tool to generate the go generate commands
@@ -32,18 +33,14 @@ func main() {
 	}
 
 	for _, file := range files {
-		if _, ok := excludeAlgorithms[file.Name()]; ok {
+		languange := strings.TrimSuffix(file.Name(), ".sbl")
+		if _, ok := excludeAlgorithms[languange]; ok {
 			continue
 		}
-		if _, err = os.Stat(filepath.Join(flag.Arg(0), file.Name(), "stem_Unicode.sbl")); err == nil {
-			fmt.Printf("//go:generate $SNOWBALL/snowball $SNOWBALL/algorithms/%s/stem_Unicode.sbl -go -o %s/%s_stemmer -gop %s -gor github.com/blevesearch/snowballstem\n",
-				file.Name(), file.Name(), file.Name(), file.Name())
-		} else if _, err = os.Stat(filepath.Join(flag.Arg(0), file.Name(), "stem_ISO_8859_1.sbl")); err == nil {
-			fmt.Printf("//go:generate $SNOWBALL/snowball $SNOWBALL/algorithms/%s/stem_ISO_8859_1.sbl -go -o %s/%s_stemmer -gop %s -gor github.com/blevesearch/snowballstem\n",
-				file.Name(), file.Name(), file.Name(), file.Name())
-		}
+		fmt.Printf("//go:generate $SNOWBALL/snowball $SNOWBALL/algorithms/%s -go -o %s/%s_stemmer -gop %s -gor github.com/blevesearch/snowballstem\n",
+			file.Name(), languange, languange, languange)
 		fmt.Printf("//go:generate gofmt -s -w %s/%s_stemmer.go\n",
-			file.Name(), file.Name())
+			languange, languange)
 		fmt.Println()
 	}
 }
