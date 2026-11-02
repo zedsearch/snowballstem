@@ -36,10 +36,10 @@ func main() {
 			continue
 		}
 		if _, err = os.Stat(filepath.Join(flag.Arg(0), file.Name(), "stem_Unicode.sbl")); err == nil {
-			fmt.Printf("//go:generate $SNOWBALL/snowball $SNOWBALL/algorithms/%s/stem_Unicode.sbl -go -o %s/%s_stemmer -gop %s -gor github.com/blevesearch/snowballstem\n",
+			fmt.Printf("//go:generate $SNOWBALL/snowball $SNOWBALL/algorithms/%s/stem_Unicode.sbl -go -o %s/%s_stemmer -gop %s -gor github.com/zedsearch/snowballstem\n",
 				file.Name(), file.Name(), file.Name(), file.Name())
 		} else if _, err = os.Stat(filepath.Join(flag.Arg(0), file.Name(), "stem_ISO_8859_1.sbl")); err == nil {
-			fmt.Printf("//go:generate $SNOWBALL/snowball $SNOWBALL/algorithms/%s/stem_ISO_8859_1.sbl -go -o %s/%s_stemmer -gop %s -gor github.com/blevesearch/snowballstem\n",
+			fmt.Printf("//go:generate $SNOWBALL/snowball $SNOWBALL/algorithms/%s/stem_ISO_8859_1.sbl -go -o %s/%s_stemmer -gop %s -gor github.com/zedsearch/snowballstem\n",
 				file.Name(), file.Name(), file.Name(), file.Name())
 		}
 		fmt.Printf("//go:generate gofmt -s -w %s/%s_stemmer.go\n",

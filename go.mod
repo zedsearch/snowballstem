@@ -1,3 +1,3 @@
-module github.com/blevesearch/snowballstem
+module github.com/zedsearch/snowballstem
 
 go 1.13

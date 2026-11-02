@@ -4,7 +4,7 @@
 package irish
 
 import (
-	snowballRuntime "github.com/blevesearch/snowballstem"
+	snowballRuntime "github.com/zedsearch/snowballstem"
 )
 
 var A_0 = []*snowballRuntime.Among{

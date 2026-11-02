@@ -67,18 +67,11 @@ func (env *Env) ReplaceS(bra, ket int, s string) int32 {
 }
 
 func (env *Env) EqS(s string) bool {
-	if env.Cursor >= env.Limit {
+	if env.Limit-env.Cursor < len(s) || !strings.HasPrefix(env.current[env.Cursor:], s) {
 		return false
 	}
-
-	if strings.HasPrefix(env.current[env.Cursor:], s) {
-		env.Cursor += len(s)
-		for !onCharBoundary(env.current, env.Cursor) {
-			env.Cursor++
-		}
-		return true
-	}
-	return false
+	env.Cursor += len(s)
+	return true
 }
 
 func (env *Env) EqSB(s string) bool {
@@ -165,8 +158,8 @@ func (env *Env) InGroupingB(chars []byte, min, max int32) bool {
 	}
 	env.PrevChar()
 	r, _ := utf8.DecodeRuneInString(env.current[env.Cursor:])
+	env.NextChar()
 	if r != utf8.RuneError {
-		env.NextChar()
 		if r > max || r < min {
 			return false
 		}
@@ -205,8 +198,8 @@ func (env *Env) OutGroupingB(chars []byte, min, max int32) bool {
 	}
 	env.PrevChar()
 	r, _ := utf8.DecodeRuneInString(env.current[env.Cursor:])
+	env.NextChar()
 	if r != utf8.RuneError {
-		env.NextChar()
 		if r > max || r < min {
 			env.PrevChar()
 			return true

@@ -14,8 +14,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/blevesearch/snowballstem"
-	"github.com/blevesearch/snowballstem/english"
+	"github.com/zedsearch/snowballstem"
+	"github.com/zedsearch/snowballstem/english"
 )
 
 func main() {
